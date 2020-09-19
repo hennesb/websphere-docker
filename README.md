@@ -1,4 +1,4 @@
-# Websphere Docker Sample Config and App Deployment
+# Websphere and Docker 
 
 **Build Image**
 
