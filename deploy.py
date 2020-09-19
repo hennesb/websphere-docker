@@ -1,5 +1,8 @@
+'''
+Sample deployment file for Websphere on docker
+'''
 
-#varName = "ORACLE_JDBC_DRIVER_PATH"
+
 ORACLE_DRIVER_VARIABLE_NAME = "ORACLE_JDBC_DRIVER_PATH"
 newVarValue = "/opt/IBM/WebSphere/AppServer/lib"
 
@@ -40,7 +43,7 @@ def dataSoureAttributes():
     return  [ dsJNDIName(), connectionPoolProperties(), authAlias(), sqlStatmentCache(), mappingAlias(), customeProperties() ]
 
 
-def createOracleJDBCProvider():
+def createDataSource():
     print('Creating JDBC provider for Oracle')
     jdbc_provider=AdminJDBC.createJDBCProvider("DefaultNode01", "server1", "Oracle JDBC provider", "oracle.jdbc.pool.OracleConnectionPoolDataSource",[['classpath', '${ORACLE_JDBC_DRIVER_PATH}/ojdbc8.jar'], ['providerType', 'Oracle JDBC Driver']])
     print('**********')
@@ -83,16 +86,18 @@ def installApplication():
     AdminApp.install('/work/InetAddressInfoTest.ear', '[-MapWebModToVH [[ "Inet Address Info Test" InetAddressInfoTest.war,WEB-INF/web.xml default_host ]] -appname dnsCacheTest]') 
     print('Application installed ')
 
-#
-#
-# Configure Environment and deploy application
-#
-logEnvironment()
-setWebsphereEnvVariable()
-createOracleJDBCProvider()
-createJ2CAuthDetailsForOracle()
-installApplication()
-saveWebSphereConfig()
+
+def deploy():
+    logEnvironment()
+    setWebsphereEnvVariable()
+    createJ2CAuthDetailsForOracle()
+    createDataSource()
+    installApplication()
+    saveWebSphereConfig()
 
 
+#
+# Execute the deployment
+
+deploy()
 
