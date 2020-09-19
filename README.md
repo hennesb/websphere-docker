@@ -12,7 +12,7 @@
 
 `docker exec was-server cat /tmp/PASSWORD`
 
-## URLS
+## Location of UIs
 **Websphere admin console**
 
 https://localhost:9043/ibm/console/login.do?action=secure
